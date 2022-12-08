@@ -7,4 +7,5 @@ import org.springframework.stereotype.Component
 @ConfigurationProperties(prefix = "app")
 class AppParams {
   lateinit var speakTextUrl: String
+  lateinit var slackWebhookUrl: String
 }

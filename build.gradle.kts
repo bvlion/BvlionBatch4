@@ -22,6 +22,8 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.0")
 	implementation("com.sun.mail:javax.mail:1.6.2")
+	implementation("org.apache.httpcomponents:fluent-hc:4.5.13")
+	implementation("org.json:json:20220924")
 	runtimeOnly("mysql:mysql-connector-java")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
