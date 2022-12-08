@@ -1,10 +1,10 @@
 package net.ambitious.bvlion.batch4.controller
 
 import net.ambitious.bvlion.batch4.data.AppParams
+import net.ambitious.bvlion.batch4.util.AccessUtil
 import net.ambitious.bvlion.batch4.util.FirebasePut
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RestController
-import java.text.SimpleDateFormat
 import java.util.*
 
 @RestController
@@ -15,9 +15,8 @@ class SpeakController(
 
   @PutMapping("/speak-time")
   fun speakTime(): String {
-    val date = Date()
-    val text = "時刻は${SimpleDateFormat("HH:mm").format(date)}です"
-    val message = "$text … $date … 45 … home"
+    val text = "時刻は${AccessUtil.getNow("HH:mm")}です"
+    val message = "$text … ${AccessUtil.getNow("yyyyMMddHHmmss")} … 45 … home"
 
     firebasePut.putMessage(appParams.speakTextUrl, message)
 
