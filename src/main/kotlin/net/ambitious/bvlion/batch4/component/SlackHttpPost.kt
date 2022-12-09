@@ -1,4 +1,4 @@
-package net.ambitious.bvlion.batch4.util
+package net.ambitious.bvlion.batch4.component
 
 import net.ambitious.bvlion.batch4.data.AppParams
 import org.slf4j.LoggerFactory

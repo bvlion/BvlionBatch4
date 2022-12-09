@@ -1,4 +1,4 @@
-package net.ambitious.bvlion.batch4.util
+package net.ambitious.bvlion.batch4.component
 
 import com.sun.mail.imap.IMAPFolder
 import com.sun.mail.imap.IMAPStore
@@ -7,6 +7,7 @@ import javax.mail.MessagingException
 import javax.mail.Session
 import net.ambitious.bvlion.batch4.data.AppParams
 import net.ambitious.bvlion.batch4.mapper.MailApiMapper
+import net.ambitious.bvlion.batch4.util.MailUtil
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import java.util.*

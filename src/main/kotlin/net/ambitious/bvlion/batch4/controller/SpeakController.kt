@@ -2,7 +2,7 @@ package net.ambitious.bvlion.batch4.controller
 
 import net.ambitious.bvlion.batch4.data.AppParams
 import net.ambitious.bvlion.batch4.util.AccessUtil
-import net.ambitious.bvlion.batch4.util.FirebasePut
+import net.ambitious.bvlion.batch4.component.FirebasePut
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RestController
 import java.util.*

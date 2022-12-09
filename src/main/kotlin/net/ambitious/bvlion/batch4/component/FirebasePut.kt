@@ -1,4 +1,4 @@
-package net.ambitious.bvlion.batch4.util
+package net.ambitious.bvlion.batch4.component
 
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component

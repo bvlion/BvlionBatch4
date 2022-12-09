@@ -1,8 +1,8 @@
 package net.ambitious.bvlion.batch4.controller
 
 import net.ambitious.bvlion.batch4.util.AccessUtil
-import net.ambitious.bvlion.batch4.util.Mail
-import net.ambitious.bvlion.batch4.util.SlackHttpPost
+import net.ambitious.bvlion.batch4.component.Mail
+import net.ambitious.bvlion.batch4.component.SlackHttpPost
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RestController
 
