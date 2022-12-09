@@ -7,5 +7,5 @@ import org.springframework.boot.runApplication
 class Batch4Application
 
 fun main(args: Array<String>) {
-	runApplication<Batch4Application>(*args)
+  runApplication<Batch4Application>(*args)
 }

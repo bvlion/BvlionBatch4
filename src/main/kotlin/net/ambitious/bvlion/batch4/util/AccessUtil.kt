@@ -1,5 +1,6 @@
 package net.ambitious.bvlion.batch4.util
 
+import org.apache.commons.lang3.time.FastDateFormat
 import org.apache.http.client.fluent.Request
 import org.apache.http.client.fluent.Response
 import org.json.JSONArray
@@ -8,14 +9,22 @@ import org.json.JSONObject
 import org.slf4j.LoggerFactory
 import java.io.IOException
 import java.nio.charset.StandardCharsets
-import java.text.SimpleDateFormat
 import java.util.*
 
 object AccessUtil {
-  fun getNow(format: String): String = SimpleDateFormat(format).format(Date())
+
+  val TOKYO: TimeZone = TimeZone.getTimeZone("Asia/Tokyo")
+
+  fun getNow(format: String): String =
+    formatMessage(format, Calendar.getInstance(TOKYO).time)
+  fun formatMessage(
+    format: String,
+    date: Date
+  ): String = FastDateFormat.getInstance(format, TOKYO)
+    .format(date)
 
   fun getHoroscopeMessage(): String {
-    val today = AccessUtil.getNow("yyyy/MM/dd")
+    val today = getNow("yyyy/MM/dd")
     val message = StringBuilder()
     val request = Request.Get("http://api.jugemkey.jp/api/horoscope/free/$today")
     var res: Response? = null

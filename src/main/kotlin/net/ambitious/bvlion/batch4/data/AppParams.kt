@@ -8,4 +8,8 @@ import org.springframework.stereotype.Component
 class AppParams {
   lateinit var speakTextUrl: String
   lateinit var slackWebhookUrl: String
+
+  lateinit var mailHost: String
+  lateinit var mailUser: String
+  lateinit var mailPassword: String
 }
