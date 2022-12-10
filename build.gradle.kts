@@ -25,6 +25,7 @@ dependencies {
 	implementation("org.apache.httpcomponents:fluent-hc:4.5.13")
 	implementation("org.json:json:20220924")
 	implementation("org.apache.commons:commons-lang3:3.12.0")
+	implementation("org.twitter4j:twitter4j-core:4.1.2")
 	runtimeOnly("mysql:mysql-connector-java")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }

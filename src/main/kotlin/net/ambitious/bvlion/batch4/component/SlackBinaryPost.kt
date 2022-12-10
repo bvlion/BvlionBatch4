@@ -66,12 +66,10 @@ class SlackBinaryPost(
           "server_api",
           "BOT Twitter",
           "画像送信でエラーが発生しました。\\nファイル名 -> $fileName",
-          "http://4s.ambitious-i.net/icon/syobon.png"
+          "https://4s.ambitious-i.net/icon/syobon.png"
         )
       }
-    } catch (e: IOException) {
-      e.printStackTrace()
-    } catch (e: JSONException) {
+    } catch (e: Exception) {
       e.printStackTrace()
     }
     con.disconnect()
