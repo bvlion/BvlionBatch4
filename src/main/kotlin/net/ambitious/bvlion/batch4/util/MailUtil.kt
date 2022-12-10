@@ -8,7 +8,6 @@ import javax.mail.Multipart
 import javax.mail.UIDFolder
 import javax.mail.internet.MimeUtility
 import javax.mail.search.AddressStringTerm
-import org.apache.commons.lang3.time.FastDateFormat
 import org.slf4j.LoggerFactory
 import java.io.IOException
 import java.io.Serializable
@@ -70,9 +69,7 @@ object MailUtil {
   ): String {
     if (prefixFormat.isNotEmpty()) {
       try {
-        return (userName
-            + FastDateFormat.getInstance(prefixFormat, AccessUtil.TOKYO)
-          .format(message.receivedDate))
+        return (userName + AccessUtil.formatMessage(prefixFormat, message.receivedDate))
       } catch (e: MessagingException) {
         logger.warn("Can't get ReceivedDate", e)
       }
