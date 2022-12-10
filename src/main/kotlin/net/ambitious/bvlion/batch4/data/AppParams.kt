@@ -12,4 +12,6 @@ class AppParams {
   lateinit var mailHost: String
   lateinit var mailUser: String
   lateinit var mailPassword: String
+
+  lateinit var slackToken: String
 }

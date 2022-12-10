@@ -7,7 +7,10 @@ import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 import org.slf4j.LoggerFactory
+import java.io.ByteArrayOutputStream
 import java.io.IOException
+import java.net.HttpURLConnection
+import java.net.URL
 import java.nio.charset.StandardCharsets
 import java.util.*
 
@@ -75,6 +78,22 @@ object AccessUtil {
     }
     return message.toString()
   }
+
+  @Throws(IOException::class)
+  fun getBinaryBytes(binaryUrl: String): ByteArray {
+    val url = URL(binaryUrl)
+    val con = url.openConnection() as HttpURLConnection
+    val bout = ByteArrayOutputStream()
+    con.inputStream.use {
+      val data = ByteArray(1024)
+      var len: Int
+      while (it.read(data, 0, 1024).also { length -> len = length } != -1) {
+        bout.write(data, 0, len)
+      }
+    }
+    return bout.toByteArray()
+  }
+
 
   @JvmStatic
   private val logger = LoggerFactory.getLogger(AccessUtil::class.java)
