@@ -19,6 +19,7 @@ class TwitterSearch(
       twitter.v1().timelines().getUserTimeline(channel.searchValue).forEach { status ->
         status.mediaEntities
           .filter { !postedMedia.contains(it.mediaURL) }
+          .filter { status.text.split(" ").size <= 2 }
           .filter { slackBinaryPost.post(channel.slackChannel, it.mediaURL, status.text) }
           .forEach {
             twitterImageMapper.savePostedMedia(channel.imageType, it.mediaURL, status.text)

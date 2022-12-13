@@ -42,10 +42,10 @@ class Mail(
                 // 適切にフォーマットしてSlackにPost
                 messages
                   .map { MailUtil.setSeenFlag(it) }
-                  .forEach {
+                  .forEach messageEach@ {
                     if (entity.channel == null || entity.userName == null ||
                       entity.prefixFormat == null || entity.iconUrl == null) {
-                      return@forEach
+                      return@messageEach
                     }
                     slackHttpPost.send(
                       entity.channel,
