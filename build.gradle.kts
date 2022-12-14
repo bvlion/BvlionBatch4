@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "net.ambitious.bvlion"
-version = "1.0.0-SNAPSHOT"
+version = "1.0.0"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
 repositories {

@@ -7,5 +7,9 @@ import org.springframework.boot.runApplication
 class Batch4Application
 
 fun main(args: Array<String>) {
+  val logOutDir = "LOG_OUT_DIR"
+  if (System.getProperty(logOutDir).isNullOrEmpty()) {
+    System.setProperty(logOutDir, ".")
+  }
   runApplication<Batch4Application>(*args)
 }

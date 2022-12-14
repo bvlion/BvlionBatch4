@@ -3,11 +3,27 @@
 	<include resource="org/springframework/boot/logging/logback/defaults.xml" />
 	<include resource="org/springframework/boot/logging/logback/console-appender.xml" />
 
+	<property name="TIME_ZONE" value="Asia/Tokyo" />
+
 	<appender name="NOOP" class="ch.qos.logback.core.helpers.NOPAppender" />
 
 	<logger name="com.zaxxer.hikari.pool.PoolBase" additivity="false">
 		<appender-ref ref="NOOP" />
 	</logger>
+
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_OUT_DIR}/log/bvliob-batch4.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_OUT_DIR}/log/bvliob-batch4.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{YYYY-MM-dd HH:mm:ss.SSS,Asia/Tokyo} [%thread] %-5level %logger{36} - %msg%n</pattern>
+		</encoder>
+	</appender>
+	<root level="trace">
+		<appender-ref ref="FILE" />
+	</root>
 
 	<root level="INFO">
 		<appender-ref ref="CONSOLE" />
