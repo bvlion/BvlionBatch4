@@ -24,12 +24,19 @@ class SlackHttpPost(private val appParams: AppParams) {
     text: String,
     iconUrl: String
   ) {
+    val escapedText = text.map {
+      if (it.code < 32 && it.code != 10) {
+        ""
+      } else {
+        it
+      }
+    }.joinToString("")
     val payload = "payload=" + URLEncoder.encode("""
         |{
         |  "channel": "#$channel",
         |  "as_user": "true",
         |  "username": "$userName",
-        |  "text": "$text",
+        |  "text": "$escapedText",
         |  "icon_url": "$iconUrl"
         |}
       """.trimMargin() ,StandardCharsets.UTF_8)
@@ -54,7 +61,7 @@ class SlackHttpPost(private val appParams: AppParams) {
       """
         |$responseMessage
         |user_name:$userName
-        |text:$text
+        |text:$escapedText
       """.trimMargin().let {
         if (responseCode == HttpStatus.SC_OK) {
           logger.info(it)
