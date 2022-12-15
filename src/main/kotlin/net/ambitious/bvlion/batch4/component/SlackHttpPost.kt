@@ -1,6 +1,7 @@
 package net.ambitious.bvlion.batch4.component
 
 import net.ambitious.bvlion.batch4.data.AppParams
+import org.apache.http.HttpStatus
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import java.io.BufferedReader
@@ -24,14 +25,14 @@ class SlackHttpPost(private val appParams: AppParams) {
     iconUrl: String
   ) {
     val payload = "payload=" + URLEncoder.encode("""
-        {
-          "channel": "#$channel",
-          "as_user": "true",
-          "username": "$userName",
-          "text": "$text",
-          "icon_url": "$iconUrl"
-        }
-      """.trimIndent() ,StandardCharsets.UTF_8)
+        |{
+        |  "channel": "#$channel",
+        |  "as_user": "true",
+        |  "username": "$userName",
+        |  "text": "$text",
+        |  "icon_url": "$iconUrl"
+        |}
+      """.trimMargin() ,StandardCharsets.UTF_8)
     val url = URL(appParams.slackWebhookUrl)
     val con = (url.openConnection() as HttpURLConnection).apply {
       requestMethod = "POST"
@@ -40,13 +41,28 @@ class SlackHttpPost(private val appParams: AppParams) {
       doOutput = true
     }
     DataOutputStream(con.outputStream).use { wr -> wr.writeBytes(payload) }
-    BufferedReader(InputStreamReader(con.inputStream, StandardCharsets.UTF_8)).use { br ->
-      logger.info("""
-            Slack Post response is ${br.lines().collect(Collectors.joining("\n"))}
-            user_name:$userName
-            text:$text
-            """.trimIndent()
-      )
+    val responseCode = con.responseCode
+    BufferedReader(InputStreamReader(
+      if (responseCode == HttpStatus.SC_OK) {
+        con.inputStream
+      } else {
+        con.errorStream
+      },
+      StandardCharsets.UTF_8
+    )).use { br ->
+      val responseMessage = "Slack Post response is $responseCode, ${br.lines().collect(Collectors.joining("\n"))}"
+      """
+        |$responseMessage
+        |user_name:$userName
+        |text:$text
+      """.trimMargin().let {
+        if (responseCode == HttpStatus.SC_OK) {
+          logger.info(it)
+        } else {
+          logger.warn(it)
+          throw IllegalStateException(responseMessage)
+        }
+      }
     }
   }
 

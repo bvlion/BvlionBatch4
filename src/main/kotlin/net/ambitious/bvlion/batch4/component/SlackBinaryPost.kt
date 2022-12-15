@@ -58,9 +58,9 @@ class SlackBinaryPost(
       } else {
         logger.warn(
           """
-            Slack Binary Post response is $data
-            $fileName
-            """.trimIndent()
+            |Slack Binary Post response is $data
+            |$fileName
+          """.trimMargin()
         )
         slackHttpPost.send(
           "server_api",

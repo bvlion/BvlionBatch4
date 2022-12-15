@@ -49,11 +49,11 @@ object MailUtil {
       val message = (folder as UIDFolder).getMessageByUID(messageId)
       val body = getBody(message)
       """
-   件名：$subject
-   ----------
-   ${body.replace("\"", "\\\"")}
-   ----------
-   """.trimIndent()
+        |件名：$subject
+        |----------
+        |${body.replace("\"", "\\\"")}
+        |----------
+      """.trimMargin()
     } catch (e: MessagingException) {
       logger.warn("Can't get subject & body", e)
       null
