@@ -25,10 +25,10 @@ class FirebasePut {
       doOutput = true
     }
 
+    val encodeText = text.mapIndexed { i, _ -> String.format("\\u%04X", text.codePointAt(i)) }.joinToString("")
+
     DataOutputStream(con.outputStream).use { wr ->
-      wr.writeBytes(
-      "\"${URLEncoder.encode(text, StandardCharsets.UTF_8)}\""
-      )
+      wr.writeBytes("\"$encodeText\"")
     }
 
     BufferedReader(InputStreamReader(con.inputStream, StandardCharsets.UTF_8)).use { br ->
