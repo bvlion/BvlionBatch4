@@ -1,5 +1,6 @@
 package net.ambitious.bvlion.batch4.controller
 
+import net.ambitious.bvlion.batch4.component.CheckDating
 import net.ambitious.bvlion.batch4.util.AccessUtil
 import net.ambitious.bvlion.batch4.component.Mail
 import net.ambitious.bvlion.batch4.component.SlackHttpPost
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController
 class ChecksController(
   private val slackHttpPost: SlackHttpPost,
   private val mail: Mail,
+  private val checkDating: CheckDating,
   private val twitterSearch: TwitterSearch
 ) {
 
@@ -32,5 +34,10 @@ class ChecksController(
   @PutMapping("/twitter-images")
   fun twitterImagesPost() {
     Thread { twitterSearch.postMediaSlack() }.start()
+  }
+
+  @PutMapping("/dating-notification")
+  fun datingNotification() {
+    checkDating.postDatingMessage()
   }
 }
