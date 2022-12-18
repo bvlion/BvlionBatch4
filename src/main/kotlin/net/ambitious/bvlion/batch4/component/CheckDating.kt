@@ -44,10 +44,10 @@ class CheckDating(
     if (message.trim().isNotEmpty()) {
       logger.info("DatingBatch:$message")
       slackHttpPost.send(
-        "horoscope-api",
-        "horoscope-api-" + AccessUtil.getNow("yyyyMMdd"),
+        "everyday-talk",
+        "dating-bot-" + AccessUtil.getNow("yyyyMMdd"),
         message,
-        "https://4s.ambitious-i.net/icon/1434076.png"
+        "https://4s.ambitious-i.net/icon/life118.png"
       )
     }
   }
