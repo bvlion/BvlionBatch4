@@ -25,12 +25,15 @@ class SlackHttpPost(private val appParams: AppParams) {
     iconUrl: String
   ) {
     val escapedText = text.map {
-      if (it.code < 32 && it.code != 10) {
+      if (
+          (it.code < 32 && it.code != 10) || // 改行を除く 32 以下（制御文字）
+          it.code == 92 // バックスラッシュ
+      ) {
         ""
       } else {
         it
       }
-    }.joinToString("")
+    }.joinToString("").replace("\"", "\\\"")
     val payload = "payload=" + URLEncoder.encode("""
         |{
         |  "channel": "#$channel",
