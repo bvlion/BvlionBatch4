@@ -65,7 +65,7 @@ class SlackBinaryPost(
         slackHttpPost.send(
           "server_api",
           "BOT Twitter",
-          "画像送信でエラーが発生しました。\\nファイル名 -> $fileName",
+          "画像送信でエラーが発生しました。\nファイル名 -> $fileName",
           "https://4s.ambitious-i.net/icon/syobon.png"
         )
       }
