@@ -3,7 +3,6 @@ package net.ambitious.bvlion.batch4.util
 import org.apache.commons.lang3.time.FastDateFormat
 import org.apache.http.client.fluent.Request
 import org.apache.http.client.fluent.Response
-import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 import org.slf4j.LoggerFactory
@@ -33,35 +32,35 @@ object AccessUtil {
     var res: Response? = null
     try {
       res = request.execute()
-      val json = JSONObject(String(res.returnContent().asBytes(), StandardCharsets.UTF_8))
-      val horoscope: JSONObject = json.getJSONObject("horoscope")
-      val todayData: JSONArray = horoscope.getJSONArray(today)
+      val mainJson = JSONObject(String(res.returnContent().asBytes(), StandardCharsets.UTF_8))
+      val horoscope = mainJson.getJSONObject("horoscope")
+      val todayData = horoscope.getJSONArray(today)
       for (i in 0 until todayData.length()) {
-        val `object`: JSONObject = todayData.getJSONObject(i)
-        if ("双子座" == `object`.getString("sign")) {
+        val json = todayData.getJSONObject(i)
+        if ("双子座" == json.getString("sign")) {
           message.append(today)
           message.append("の双子座の運勢は第")
-          message.append(`object`.getInt("rank"))
+          message.append(json.getInt("rank"))
           message.append("位！\n")
-          message.append(`object`.getString("content"))
+          message.append(json.getString("content"))
           message.append("\n")
           message.append("ラッキーカラーは「")
-          message.append(`object`.getString("color"))
+          message.append(json.getString("color"))
           message.append("」、")
           message.append("ラッキーアイテムは「")
-          message.append(`object`.getString("item"))
+          message.append(json.getString("item"))
           message.append("」だよ。\n\n")
           message.append("金運：")
-          message.append(`object`.getInt("money"))
+          message.append(json.getInt("money"))
           message.append("\n")
           message.append("仕事運：")
-          message.append(`object`.getInt("job"))
+          message.append(json.getInt("job"))
           message.append("\n")
           message.append("恋愛運：")
-          message.append(`object`.getInt("love"))
+          message.append(json.getInt("love"))
           message.append("\n")
           message.append("総合評価：")
-          message.append(`object`.getInt("total"))
+          message.append(json.getInt("total"))
           break
         }
       }
