@@ -15,15 +15,13 @@ class CheckDating(
   private val datingMapper: DatingMapper,
   private val slackHttpPost: SlackHttpPost
 ) {
-  fun postDatingMessage() {
-    val message = datingMapper.allDating()
+  fun postDatingMessage(time: Long = Calendar.getInstance(AccessUtil.TOKYO).timeInMillis): String =
+    datingMapper.allDating()
       .map {
         if (it.targetDate.length == 8) {
           try {
             val anniversary = DateUtils.parseDate(it.targetDate, "yyyyMMdd")
-            val totalDays = TimeUnit.DAYS.convert(
-              Calendar.getInstance(AccessUtil.TOKYO).timeInMillis - anniversary.time, TimeUnit.MILLISECONDS
-            ).toInt()
+            val totalDays = TimeUnit.DAYS.convert(time - anniversary.time, TimeUnit.MILLISECONDS).toInt()
             if (totalDays % 100 == 0) {
               return@map String.format(
                 it.message,
@@ -34,23 +32,22 @@ class CheckDating(
             logger.warn(it.targetDate, e)
           }
         } else {
-          if (AccessUtil.getNow("MMdd") == it.targetDate) {
+          if (AccessUtil.formatMessage("MMdd", Date(time)) == it.targetDate) {
             return@map it.message
           }
         }
         ""
-      }.joinToString("\n")
-
-    if (message.trim().isNotEmpty()) {
-      logger.info("DatingBatch:$message")
-      slackHttpPost.send(
-        "everyday-talk",
-        "dating-bot-" + AccessUtil.getNow("yyyyMMdd"),
-        message,
-        "https://4s.ambitious-i.net/icon/life118.png"
-      )
-    }
-  }
+      }.filter{ it.isNotEmpty() }.joinToString("\n").trim().also {
+        if (it.isNotEmpty()) {
+          logger.info("DatingBatch:$it\nDate:${AccessUtil.formatMessage("yyyyMMdd", Date(time))}")
+          slackHttpPost.send(
+            "everyday-talk",
+            "dating-bot-" + AccessUtil.getNow("yyyyMMdd"),
+            it,
+            "https://4s.ambitious-i.net/icon/life118.png"
+          )
+        }
+      }
 
   companion object {
     @JvmStatic
