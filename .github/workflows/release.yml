@@ -24,7 +24,6 @@ jobs:
     - name: setup properties files
       run: |
         echo ${{ secrets.APPLICATION_PROPERTIES }} | base64 -d > src/main/resources/application.properties
-        echo ${{ secrets.TWITTER4J_PROPERTIES }} | base64 -d > src/main/resources/twitter4j.properties
 
     - name: create fatJar
       run: ./gradlew clean bootJar
