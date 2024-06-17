@@ -24,7 +24,7 @@ dependencies {
 	implementation("com.sun.mail:javax.mail:1.6.2")
 	implementation("org.apache.httpcomponents:fluent-hc:4.5.13")
 	implementation("org.json:json:20230227")
-	implementation("org.apache.commons:commons-lang3:3.13.0")
+	implementation("org.apache.commons:commons-lang3:3.14.0")
 	implementation("org.twitter4j:twitter4j-core:4.1.2")
 	runtimeOnly("mysql:mysql-connector-java")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
